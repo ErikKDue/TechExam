@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
+//force update test comment
 @Entity
 @Table(name = "students")
 public class Student {
