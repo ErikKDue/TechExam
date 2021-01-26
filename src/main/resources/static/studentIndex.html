@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BAAARP</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+</head>
+<script>
+    function update(){
+        $.ajax({
+            method : "POST",
+            url : "http://localhost:8080/update?id=" +document.getElementById('updateId').value + "&name=" +document.getElementById('updateName').value +"&email="+document.getElementById('updateEmail').value+"&superID="+document.getElementById('updateSuperId').value,
+
+        });
+        updateStudents();
+    }
+
+    function uniUpdate(){
+        $.ajax({
+            method : "POST",
+            url : "http://localhost:8080/update?id=" +document.getElementById('commonId').value + "&name=" +document.getElementById('commonName').value +"&email="+document.getElementById('commonEmail').value+"&superID="+document.getElementById('commonSuperId').value,
+
+        });
+        updateStudents();
+    }
+
+function create(){
+    $.ajax({
+        method : "POST",
+        url : "http://localhost:8080/create?name=" +document.getElementById('createName').value +"&email="+document.getElementById('createEmail').value+"&superID="+document.getElementById('createSuperId').value,
+
+    });
+    updateStudents();
+}
+
+    function uniCreate(){
+        $.ajax({
+            method : "POST",
+            url : "http://localhost:8080/create?name=" +document.getElementById('commonName').value +"&email="+document.getElementById('commonEmail').value+"&superID="+document.getElementById('commonSuperId').value,
+
+        });
+        window.setTimeout(updateStudents(), 5000);
+    }
+
+function baleet(){
+    $.ajax({
+    method : "POST",
+    url : "http://localhost:8080/delete?id=" + document.getElementById('deleteid').value
+
+})
+updateStudents();
+}
+
+    function uniBaleet(){
+        $.ajax({
+            method : "POST",
+            url : "http://localhost:8080/delete?id=" + document.getElementById('commonId').value
+
+        })
+        updateStudents();
+    }
+
+
+
+    function updateStudents(){
+        $.ajax({
+            url: "http://localhost:8080/student",
+            method : "GET",
+            dataType: "json",
+            success: function (data) {
+                var tableBody = $('#tblStudent tbody');
+                tableBody.empty();
+                $(data).each(function (index, element){
+                    tableBody.append('<tr><td>ID: '+element.studentId+'</td><td>name: '+element.name+'</td><td>email: '+element.email+'</td><td>supervisor: '+element.supervisor.name+'</td><td>');
+                });
+            },
+            error: function (error){
+                alert(error);
+            }
+        })
+
+    }
+
+    //this bit is only here because for some reason the updateStudents() function doesn't usually run after running one of the CRUD functions
+    var myVar = setInterval(updateStudents, 500);
+
+</script>
+<body>
+
+
+
+<!--
+<input name="deleteId" type="number" id="deleteid"/>
+<button id="deleteBTN" onclick="baleet()">Delete Student above</button>
+
+<input name="createName" type="text" id="createName"/>
+<input name="createEmail" type="text" id="createEmail"/>
+<input name="createSuperId" type="number" id="createSuperId"/>
+<button id=”CreateBTN” onclick="create()">Create Student</button>
+
+<input name="updateId" type="text" id="updateId"/>
+<input name="updateName" type="text" id="updateName"/>
+<input name="updateEmail" type="text" id="updateEmail"/>
+<input name="updateSuperId" type="number" id="updateSuperId"/>
+<button id=”UpdateBTN” onclick="update()">Update Student</button>
+-->
+
+<th>INPUT</th><br>
+<input name="commonId" type="number" id="commonId"/> student id<br>
+<input name="commonName" type="text" id="commonName"/> student name<br>
+<input name="commonEmail" type="text" id="commonEmail"/> student email<br>
+<input name="commonSuperId" type="number" id="commonSuperId"/> supervisor id<br>
+<button id=”CUpdateBTN” onclick="uniUpdate()">Update Student (all)</button>
+<button id=”CCreateBTN” onclick="uniCreate()">Create Student (name, mail, supervisor id)</button>
+<button id=”CDeleteBTN” onclick="uniBaleet()">Delete Student (student id)</button>
+<hr>
+<table id="tblStudent">
+    <thead>
+    <tr>
+        <th>STUDENT LIST</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<!--
+<button id="manUpdate" onclick="updateStudents()">Manual update list</button>
+-->
+<script>(function () {
+updateStudents();
+})();</script>
+
+</body>
+<script>
+var x = {key : 'value', key2 : value2};
+
+
+</script>
+</html>
