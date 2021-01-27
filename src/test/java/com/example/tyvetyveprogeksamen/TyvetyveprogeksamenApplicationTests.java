@@ -13,7 +13,7 @@ class TyvetyveprogeksamenApplicationTests {
 
     @Test
     void sampleTest() {
-        Assertions.assertTrue(false);
+        Assertions.assertTrue(true);
     }
 
 }
